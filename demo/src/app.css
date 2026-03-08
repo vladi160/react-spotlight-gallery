@@ -1,0 +1,69 @@
+.spl-like {
+  background-image: url(/gallery/heart-outline.svg);
+  background-size: 23px;
+}
+
+.spl-like.on {
+  background-image: url(/gallery/heart.svg);
+}
+
+.only-this-gallery.show .spl-scene {
+  transition: transform 0.2s ease;
+}
+
+.only-this-gallery.show .spl-pane > * {
+  clip-path: circle(100% at center);
+  transition: transform 0.35s ease, opacity 0.65s ease, clip-path 0.8s ease;
+}
+
+.only-this-gallery .spl-pane .custom {
+  clip-path: circle(0px at center);
+  transition: transform 0.65s ease, opacity 0.65s ease;
+}
+
+#spotlight.only-this-gallery {
+  clip-path: circle(0px at center);
+}
+
+#spotlight.only-this-gallery.show {
+  clip-path: circle(100% at center);
+  transition: clip-path 0.65s ease 0.15s;
+}
+
+.demo-header {
+  padding-top: 1.5rem;
+}
+
+.brand-title {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin: 0;
+  letter-spacing: 0.02em;
+  color: #343a40;
+}
+
+.brand-subtitle {
+  color: #6c757d;
+  margin: 0.5rem 0 0;
+}
+
+.demo-links a {
+  margin: 0.5rem 0.4rem 0;
+}
+
+.install-section code {
+  font-size: 14px;
+}
+
+section {
+  margin: 1.25rem 0;
+}
+
+h2 {
+  color: #495057;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.api-buttons {
+  margin: 1rem 0;
+}
