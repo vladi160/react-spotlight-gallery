@@ -1,10 +1,10 @@
 .spl-like {
-  background-image: url(/gallery/heart-outline.svg);
+  background-image: url(gallery/heart-outline.svg);
   background-size: 23px;
 }
 
 .spl-like.on {
-  background-image: url(/gallery/heart.svg);
+  background-image: url(gallery/heart.svg);
 }
 
 .only-this-gallery.show .spl-scene {

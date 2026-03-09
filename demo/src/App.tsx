@@ -8,7 +8,7 @@ const apiGallery = [
   {
     title: 'Lorem ipsum dolor sit amet',
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
-    src: '/gallery/london-1758181.jpg',
+    src: 'gallery/london-1758181.jpg',
     button: 'Download Image',
     onclick: () => Spotlight.download(),
     like: false
@@ -16,7 +16,7 @@ const apiGallery = [
   {
     title: 'At vero eos et accusam',
     description: 'Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-    src: '/gallery/sea-1975403.jpg',
+    src: 'gallery/sea-1975403.jpg',
     button: 'Next Slide',
     onclick: () => Spotlight.next(),
     like: false
@@ -24,7 +24,7 @@ const apiGallery = [
   {
     title: 'Duis autem vel eum iriure dolor',
     description: 'In hendrerit in vulputate velit esse molestie consequat.',
-    src: '/gallery/newport-beach-2089906.jpg',
+    src: 'gallery/newport-beach-2089906.jpg',
     button: 'Close Gallery',
     onclick: () => Spotlight.close(),
     like: false
@@ -122,20 +122,20 @@ export default function App() {
         <h2>Anchors &amp; Images</h2>
       <SpotlightGroup options={{ fit: 'cover', autohide: 'all' }}>
         <SpotlightItem
-          href="/gallery/brooklyn-bridge-1791001.jpg"
+          href="gallery/brooklyn-bridge-1791001.jpg"
           options={{
             button: 'Click Me!',
             buttonHref: "javascript:alert('You can open an URL or execute some Javascript here.')",
             description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
           }}
         >
-          <img src="/gallery/brooklyn-bridge-1791001-thumb.jpg" alt="Lorem ipsum dolor sit amet" />
+          <img src="gallery/brooklyn-bridge-1791001-thumb.jpg" alt="Lorem ipsum dolor sit amet" />
         </SpotlightItem>
-        <SpotlightItem href="/gallery/california-1751455.jpg" options={{ description: 'Stet clita kasd gubergren, no sea takimata sanctus est.' }}>
-          <img src="/gallery/california-1751455-thumb.jpg" alt="At vero eos et accusam" />
+        <SpotlightItem href="gallery/california-1751455.jpg" options={{ description: 'Stet clita kasd gubergren, no sea takimata sanctus est.' }}>
+          <img src="gallery/california-1751455-thumb.jpg" alt="At vero eos et accusam" />
         </SpotlightItem>
-        <SpotlightItem href="/gallery/canada-2340312.jpg" options={{ description: 'In hendrerit in vulputate velit esse molestie consequat.' }}>
-          <img src="/gallery/canada-2340312-thumb.jpg" alt="Duis autem vel eum iriure dolor" />
+        <SpotlightItem href="gallery/canada-2340312.jpg" options={{ description: 'In hendrerit in vulputate velit esse molestie consequat.' }}>
+          <img src="gallery/canada-2340312-thumb.jpg" alt="Duis autem vel eum iriure dolor" />
         </SpotlightItem>
       </SpotlightGroup>
       </section>
@@ -143,8 +143,8 @@ export default function App() {
       <section>
         <h2>Custom Elements, Videos &amp; Node Fragments</h2>
       <SpotlightGroup>
-        <SpotlightItem as="div" options={{ media: 'image', src: '/gallery/godafoss-1840758.jpg' }}>
-          <img src="/gallery/godafoss-1840758-thumb.jpg" alt="Duis autem vel eum iriure dolor" />
+        <SpotlightItem as="div" options={{ media: 'image', src: 'gallery/godafoss-1840758.jpg' }}>
+          <img src="gallery/godafoss-1840758-thumb.jpg" alt="Duis autem vel eum iriure dolor" />
         </SpotlightItem>
         <SpotlightItem
           options={{
@@ -153,15 +153,15 @@ export default function App() {
             'src-ogg': 'https://nextapps.de/video/spotlight/big_buck_bunny.ogv',
             'src-mp4': 'https://nextapps.de/video/spotlight/big_buck_bunny.mp4',
             autoplay: false,
-            poster: '/gallery/poster.jpg'
+            poster: 'gallery/poster.jpg'
           }}
         >
-          <img src="/gallery/poster.jpg" alt="Video Poster" />
+          <img src="gallery/poster.jpg" alt="Video Poster" />
         </SpotlightItem>
         <SpotlightItem options={{ media: 'node', src: '#fragment' }}>
-          <img src="/gallery/brooklyn-bridge-1791001-thumb.jpg" alt="" />
-          <img src="/gallery/california-1751455-thumb.jpg" alt="" />
-          <img src="/gallery/montana-1829251-thumb.jpg" alt="" />
+          <img src="gallery/brooklyn-bridge-1791001-thumb.jpg" alt="" />
+          <img src="gallery/california-1751455-thumb.jpg" alt="" />
+          <img src="gallery/montana-1829251-thumb.jpg" alt="" />
         </SpotlightItem>
       </SpotlightGroup>
 
@@ -170,9 +170,9 @@ export default function App() {
           <b>Embedded Node Fragment</b>
           <br />
           <br />
-          <img className="image" src="/gallery/brooklyn-bridge-1791001-thumb.jpg" width={500} height={334} />
-          <img className="image" src="/gallery/california-1751455-thumb.jpg" width={500} height={333} />
-          <img className="image" src="/gallery/montana-1829251-thumb.jpg" width={500} height={331} />
+          <img className="image" src="gallery/brooklyn-bridge-1791001-thumb.jpg" width={500} height={334} />
+          <img className="image" src="gallery/california-1751455-thumb.jpg" width={500} height={333} />
+          <img className="image" src="gallery/montana-1829251-thumb.jpg" width={500} height={331} />
         </div>
       </div>
       </section>
@@ -229,9 +229,9 @@ export default function App() {
       </div>
       </div>
       <div>
-        <div className="image" style={{ backgroundImage: 'url(/gallery/london-1758181-thumb.jpg)' }} />
-        <div className="image" style={{ backgroundImage: 'url(/gallery/sea-1975403-thumb.jpg)' }} />
-        <div className="image" style={{ backgroundImage: 'url(/gallery/newport-beach-2089906-thumb.jpg)' }} />
+        <div className="image" style={{ backgroundImage: 'url(gallery/london-1758181-thumb.jpg)' }} />
+        <div className="image" style={{ backgroundImage: 'url(gallery/sea-1975403-thumb.jpg)' }} />
+        <div className="image" style={{ backgroundImage: 'url(gallery/newport-beach-2089906-thumb.jpg)' }} />
       </div>
       </section>
     </main>
