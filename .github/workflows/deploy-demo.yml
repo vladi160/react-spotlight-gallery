@@ -23,10 +23,13 @@ jobs:
       - name: Install root deps
         run: npm install
 
+      - name: Install demo deps
+        run: npm install --prefix demo
+
       - name: Build demo
         run: npm run build:demo
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           publish_dir: ./demo/dist
