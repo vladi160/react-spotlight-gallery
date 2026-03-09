@@ -22,3 +22,5 @@ Thumbs.db
 # local/temp artifacts
 testheredoc.txt
 tsup.config.js
+
+*.tgz
