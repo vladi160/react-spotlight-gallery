@@ -1,8 +1,8 @@
 {
  "name": "react-spotlight-gallery",
- "version": "0.1.0",
+ "version": "0.1.1",
  "description": "React + TypeScript wrapper for Spotlight.js with original interactions and effects",
- "homepage": "https://github.com/vladi160/react-spotlight-gallery",
+ "homepage": "https://vladi160.github.io/react-spotlight-gallery",
  "repository": {
   "type": "git",
   "url": "git+https://github.com/vladi160/react-spotlight-gallery.git"
