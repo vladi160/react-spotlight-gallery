@@ -10,9 +10,10 @@
  "bugs": {
   "url": "https://github.com/vladi160/react-spotlight-gallery/issues"
  },
-   "sideEffects": [
-    "*.css"
-  ],
+ "sideEffects": [
+  "*.css",
+  "./src/core/spotlight-js/polyfill.js"
+ ],
  "keywords": [
   "react",
   "nextjs",

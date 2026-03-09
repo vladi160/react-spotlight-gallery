@@ -1,9 +1,17 @@
 # react-spotlight-gallery
 
-React + TypeScript wrapper around the original Spotlight.js runtime.
+Modern React + TypeScript wrapper around Spotlight.js with the original interactions and gallery behavior.
 
-- Github: https://github.com/vladi160/react-spotlight-gallery
+- Demo: https://vladi160.github.io/react-spotlight-gallery
+- GitHub: https://github.com/vladi160/react-spotlight-gallery
 - npm: https://www.npmjs.com/package/react-spotlight-gallery
+
+## Features
+
+- Original Spotlight runtime behavior and effects
+- Typed React components for markup usage
+- Programmatic API (`Spotlight.show`, `next`, `prev`, etc.)
+- Works with React and Next.js client components
 
 ## Install
 
@@ -15,6 +23,26 @@ npm install react-spotlight-gallery
 
 ```ts
 import 'react-spotlight-gallery/style.css';
+```
+
+## Quick Start (React)
+
+```tsx
+import { SpotlightGroup, SpotlightItem } from 'react-spotlight-gallery';
+import 'react-spotlight-gallery/style.css';
+
+export function Gallery() {
+  return (
+    <SpotlightGroup options={{ fit: 'cover', autohide: 'all' }}>
+      <SpotlightItem
+        href="/gallery/image.jpg"
+        options={{ title: 'Image title', description: 'Image description' }}
+      >
+        <img src="/gallery/thumb.jpg" alt="Image title" />
+      </SpotlightItem>
+    </SpotlightGroup>
+  );
+}
 ```
 
 ## Declarative usage
@@ -75,8 +103,13 @@ Use in client components:
 - `Spotlight.download()`
 
 ## Demo
+Live demo: [https://vladi160.github.io/react-spotlight-gallery](https://vladi160.github.io/react-spotlight-gallery)
+
+Or run locally:
 
 ```bash
+git clone https://github.com/vladi160/react-spotlight-gallery.git
+cd react-spotlight-gallery
 npm install
 npm run dev
 ```

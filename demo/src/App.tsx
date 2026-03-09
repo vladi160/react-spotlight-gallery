@@ -43,6 +43,39 @@ function makeState(values: string[], active: string[]): BoolMap {
   return map;
 }
 
+function CopySnippet({ code }: { code: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function onCopy() {
+    try {
+      await navigator.clipboard.writeText(code);
+    }
+    catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = code;
+      textarea.setAttribute('readonly', 'true');
+      textarea.style.position = 'absolute';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
+
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1200);
+  }
+
+  return (
+    <div className="snippet">
+      <button type="button" className="copy-btn" onClick={onCopy}>
+        {copied ? 'Copied' : 'Copy'}
+      </button>
+      <pre className="code-block"><code>{code}</code></pre>
+    </div>
+  );
+}
+
 export default function App() {
   const [controlState, setControlState] = useState<BoolMap>(makeState(controls, ['info', 'page', 'theme', 'fullscreen', 'close', 'download', 'play', 'prev', 'next']));
   const [animationState, setAnimationState] = useState<BoolMap>(makeState(animations, ['slide', 'fade']));
@@ -101,7 +134,7 @@ export default function App() {
   }
 
   return (
-    <main>
+    <main className="demo-root">
       <header className="demo-header">
         <h1 className="brand-title">react-spotlight-gallery</h1>
         <p className="brand-subtitle">React + TypeScript Spotlight gallery with original interactions.</p>
@@ -110,15 +143,26 @@ export default function App() {
           <a href="https://www.npmjs.com/package/react-spotlight-gallery" target="_blank" rel="noreferrer">NPM</a>
         </nav>
       </header>
-
-      <section className="install-section">
+      <section className="section-card install-section">
         <h2>Install</h2>
-        <pre><code>npm install react-spotlight-gallery</code></pre>
+        <CopySnippet code="npm install react-spotlight-gallery" />
+        <p>Import styles once (for example in your app entry):</p>
+        <CopySnippet code={`import 'react-spotlight-gallery/style.css';`} />
+        <p>Minimal React usage:</p>
+        <CopySnippet code={`import { SpotlightGroup, SpotlightItem } from 'react-spotlight-gallery';
+
+export function Gallery() {
+  return (
+    <SpotlightGroup options={{ fit: 'cover', autohide: 'all' }}>
+      <SpotlightItem href='gallery/photo.jpg' options={{ title: 'Photo title', description: 'Photo description' }}>
+        <img src='gallery/photo-thumb.jpg' alt='Photo title' />
+      </SpotlightItem>
+    </SpotlightGroup>
+  );
+}`} />
       </section>
-
       <hr />
-
-      <section>
+      <section className="section-card">
         <h2>Anchors &amp; Images</h2>
       <SpotlightGroup options={{ fit: 'cover', autohide: 'all' }}>
         <SpotlightItem
@@ -140,7 +184,7 @@ export default function App() {
       </SpotlightGroup>
       </section>
 
-      <section>
+      <section className="section-card">
         <h2>Custom Elements, Videos &amp; Node Fragments</h2>
       <SpotlightGroup>
         <SpotlightItem as="div" options={{ media: 'image', src: 'gallery/godafoss-1840758.jpg' }}>
@@ -167,8 +211,7 @@ export default function App() {
 
       <div style={{ display: 'none' }}>
         <div id="fragment" style={{ width: '100%' }}>
-          <b>Embedded Node Fragment</b>
-          <br />
+          <h3>Embedded Node Fragment</h3>
           <br />
           <img className="image" src="gallery/brooklyn-bridge-1791001-thumb.jpg" width={500} height={334} />
           <img className="image" src="gallery/california-1751455-thumb.jpg" width={500} height={333} />
@@ -179,10 +222,10 @@ export default function App() {
 
       <hr />
 
-      <section>
+      <section className="section-card">
       <h2>API Call</h2>
       <p>Choose controls (toolbar):</p>
-      <div id="control">
+      <div id="control" className="controls-wrap">
         {controls.map((value) => (
           <label key={value}>
             <input type="checkbox" checked={controlState[value]} onChange={() => toggleControl(value)} />
@@ -191,7 +234,7 @@ export default function App() {
         ))}
       </div>
       <p>Choose modifiers:</p>
-      <div id="modifier">
+      <div id="modifier" className="controls-wrap">
         <label><input type="checkbox" checked={autoplay} onChange={() => setAutoplay((v) => !v)} />Autoplay</label>
         <label><input type="checkbox" checked={infinite} onChange={() => setInfinite((v) => !v)} />Infinite Slide</label>
         <label><input type="checkbox" checked={spinner} onChange={() => setSpinner((v) => !v)} />Spinner</label>
@@ -208,7 +251,7 @@ export default function App() {
         <label><input type="radio" name="theme" checked={theme === 'white'} onChange={() => setTheme('white')} />Theme: white</label>
       </div>
       <p>Choose animation:</p>
-      <div id="animation">
+      <div id="animation" className="controls-wrap">
         {animations.map((value) => (
           <label key={value}>
             <input type="checkbox" checked={animationState[value]} onChange={() => toggleAnimation(value)} />

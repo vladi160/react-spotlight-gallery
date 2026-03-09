@@ -1,10 +1,10 @@
 .spl-like {
-  background-image: url(gallery/heart-outline.svg);
+  background-image: url(../gallery/heart-outline.svg);
   background-size: 23px;
 }
 
 .spl-like.on {
-  background-image: url(gallery/heart.svg);
+  background-image: url(../gallery/heart.svg);
 }
 
 .only-this-gallery.show .spl-scene {
@@ -31,39 +31,95 @@
 }
 
 .demo-header {
-  padding-top: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
 }
 
 .brand-title {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   line-height: 1;
   margin: 0;
-  letter-spacing: 0.02em;
-  color: #343a40;
+  letter-spacing: 0.01em;
+  color: #111827;
 }
 
 .brand-subtitle {
-  color: #6c757d;
-  margin: 0.5rem 0 0;
+  color: #475569;
+  margin: 0.65rem 0 0;
+  font-size: 1.02rem;
 }
 
 .demo-links a {
-  margin: 0.5rem 0.4rem 0;
+  margin: 0.75rem 0.4rem 0;
+  padding: 0.48rem 0.85rem;
+  background: #fff;
+  border: 1px solid #dbe2ef;
+  border-radius: 999px;
+  color: #334155;
+  text-decoration: none;
 }
 
-.install-section code {
-  font-size: 14px;
+.demo-links a:hover {
+  background: #f8fafc;
+  text-decoration: none;
 }
 
 section {
-  margin: 1.25rem 0;
+  margin: 1rem 0;
 }
 
 h2 {
-  color: #495057;
-  margin: 0.5rem 0 0.75rem;
+  color: #1f2937;
+  margin: 0 0 0.85rem;
+  font-size: 1.35rem;
 }
 
 .api-buttons {
   margin: 1rem 0;
+}
+
+.section-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #d9dee8;
+  border-radius: 16px;
+  padding: 1rem 1rem 1.1rem;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.section-card p {
+  margin: 0.4rem 0 0.75rem;
+  color: #475569;
+}
+
+.controls-wrap {
+  margin: 0.4rem 0 0.9rem;
+}
+
+.code-block {
+  margin-top: 0.6rem;
+}
+
+.snippet {
+  position: relative;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 1px solid #2e3a4f;
+  background: #0b1220;
+  color: #dbeafe;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1;
+  padding: 7px 10px;
+  box-shadow: none;
+  z-index: 1;
+}
+
+.copy-btn:hover {
+  background: #111a2d;
+  transform: none;
+  box-shadow: none;
 }
