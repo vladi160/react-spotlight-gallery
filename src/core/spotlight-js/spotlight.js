@@ -27,12 +27,12 @@ import {
 } from "./helper.js";
 
 import { controls, controls_default, keycodes } from "./config.js";
-import widget from "./template.js";
+import getTemplate from "./template.js";
 import parse_src from "./parser.js";
 
 const controls_dom = {};
-const connection = navigator["connection"];
-const dpr = window["devicePixelRatio"] || 1;
+let connection;
+let dpr = 1;
 
 let x;
 let y;
@@ -80,7 +80,8 @@ let body;
 let panel;
 let panes;
 let media;
-let media_next = createElement("img");
+let media_next;
+let widget;
 let slider;
 let header;
 let footer;
@@ -104,7 +105,7 @@ let hide_cooldown;
 
 let prefix_request, prefix_exit;
 
-addListener(document, "click", dispatch);
+typeof document !== 'undefined' && addListener(document, "click", dispatch);
 
 export function init(){
 
@@ -114,6 +115,11 @@ export function init(){
     }
 
     //console.log("init");
+
+    widget = getTemplate();
+    connection = navigator["connection"];
+    dpr = window["devicePixelRatio"] || 1;
+    media_next || (media_next = createElement("img"));
 
     body = document.body;
     slider = getOneByClass("scene");

@@ -16,7 +16,7 @@ Object.assign || (Object.assign =
     }
 );
 
-Element.prototype.closest || (Element.prototype.closest = function(classname){
+typeof Element !== 'undefined' && (Element.prototype.closest || (Element.prototype.closest = function(classname){
 
     //console.log("closest", classname);
 
@@ -35,4 +35,4 @@ Element.prototype.closest || (Element.prototype.closest = function(classname){
     }
 
     return null;
-});
+}));

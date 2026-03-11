@@ -1,7 +1,8 @@
 import { createElement } from "./helper.js";
 
 const video_support = {};
-const tpl_video = /** @type {HTMLVideoElement} */ (createElement("video"));
+let _tpl_video = null;
+function getTplVideo() { return _tpl_video || (_tpl_video = /** @type {HTMLVideoElement} */ (createElement("video"))); }
 
 export default function(anchor, size, options, media){
 
@@ -29,7 +30,7 @@ export default function(anchor, size, options, media){
                             break;
                         }
                     }
-                    else if(tpl_video.canPlayType("video/" + key.substring(3).replace("-", "").toLowerCase())){
+                    else if(getTplVideo().canPlayType("video/" + key.substring(3).replace("-", "").toLowerCase())){
 
                         video_support[key] = 1;
                         src = options[key];
