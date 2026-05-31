@@ -164,6 +164,24 @@ export function Gallery() {
       <hr />
       <section className="section-card">
         <h2>Anchors &amp; Images</h2>
+        <CopySnippet code={`import { SpotlightGroup, SpotlightItem } from 'react-spotlight-gallery';
+import 'react-spotlight-gallery/style.css';
+
+<SpotlightGroup options={{ fit: 'cover', autohide: 'all' }}>
+  <SpotlightItem
+    href="gallery/photo.jpg"
+    options={{
+      button: 'Click Me!',
+      buttonHref: "https://example.com",
+      description: 'Lorem ipsum'
+    }}
+  >
+    <img src="gallery/photo-thumb.jpg" alt="Title" />
+  </SpotlightItem>
+  <SpotlightItem href="gallery/photo2.jpg" options={{ description: 'Description' }}>
+    <img src="gallery/photo2-thumb.jpg" alt="Title 2" />
+  </SpotlightItem>
+</SpotlightGroup>`} />
       <SpotlightGroup options={{ fit: 'cover', autohide: 'all' }}>
         <SpotlightItem
           href="gallery/brooklyn-bridge-1791001.jpg"
@@ -186,6 +204,34 @@ export function Gallery() {
 
       <section className="section-card">
         <h2>Custom Elements, Videos &amp; Node Fragments</h2>
+        <CopySnippet code={`// Image with div trigger (no <a> needed)
+<SpotlightItem as="div" options={{ media: 'image', src: 'gallery/photo.jpg' }}>
+  <img src="gallery/photo-thumb.jpg" alt="" />
+</SpotlightItem>
+
+// Video
+<SpotlightItem
+  options={{
+    media: 'video',
+    'src-mp4': 'https://example.com/video.mp4',
+    'src-webm': 'https://example.com/video.webm',
+    autoplay: false,
+    poster: 'gallery/poster.jpg',
+  }}
+>
+  <img src="gallery/poster.jpg" alt="Video" />
+</SpotlightItem>
+
+// Embed HTML node
+<SpotlightItem options={{ media: 'node', src: '#fragment' }}>
+  <img src="gallery/thumb.jpg" alt="" />
+</SpotlightItem>
+<div style={{ display: 'none' }}>
+  <div id="fragment">
+    <h3>Embedded HTML</h3>
+    <img src="gallery/photo.jpg" />
+  </div>
+</div>`} />
       <SpotlightGroup>
         <SpotlightItem as="div" options={{ media: 'image', src: 'gallery/godafoss-1840758.jpg' }}>
           <img src="gallery/godafoss-1840758-thumb.jpg" alt="Duis autem vel eum iriure dolor" />
@@ -224,6 +270,26 @@ export function Gallery() {
 
       <section className="section-card">
       <h2>API Call</h2>
+        <CopySnippet code={`import { Spotlight } from 'react-spotlight-gallery';
+
+Spotlight.show(
+  [
+    { src: 'gallery/photo1.jpg', title: 'Title', description: 'Description' },
+    { src: 'gallery/photo2.jpg', title: 'Title 2' },
+    { src: 'gallery/photo3.jpg', title: 'Title 3' },
+  ],
+  {
+    control: ['page', 'fullscreen', 'close', 'prev', 'next'],
+    animation: ['slide', 'fade'],
+    infinite: true,
+    autohide: true,
+    fit: 'cover',
+    theme: '',
+    onshow(index) { console.log('opened at', index); },
+    onchange(index) { console.log('slide', index); },
+    onclose() { console.log('closed'); },
+  }
+);`} />
       <p>Choose controls (toolbar):</p>
       <div id="control" className="controls-wrap">
         {controls.map((value) => (
