@@ -38,11 +38,32 @@ let x;
 let y;
 let startX;
 let startY;
+let down_x;
+let down_y;
+let last_tap_time = 0;
 let viewport_w;
 let viewport_h;
 let media_w;
 let media_h;
 let scale;
+
+// A tap on a real touchscreen almost always reports a few pixels of jitter
+// between touchstart and touchend, even when the user didn't mean to drag.
+// Mouse-based emulation (browser devtools) never does this, which is why
+// this bug only reproduces on real hardware — any nonzero movement was
+// being treated as a drag, so a plain tap never reached the "not dragged"
+// branch in end() that toggles the controls menu.
+const DRAG_THRESHOLD_SQ = 10 * 10;
+
+// Two taps within this window count as a double-tap (zoom toggle) instead
+// of two separate single-taps (menu toggle).
+const DOUBLE_TAP_DELAY = 300;
+
+// Number of zoom_in() steps applied on double-tap-to-zoom (zoom_in()
+// multiplies scale by ~1.54x per step, so 3 steps lands around ~3.6x —
+// a sensible "zoomed in" preset without reaching the library's absolute
+// zoom_in() cap of 50x).
+const DOUBLE_TAP_ZOOM_STEPS = 3;
 
 let is_down;
 let dragged;
@@ -958,6 +979,8 @@ function start(e){
     slidable = /* !toggle_autofit && */ (media_w * scale) <= viewport_w;
     startX = e.pageX;
     startY = e.pageY;
+    down_x = startX;
+    down_y = startY;
 
     toggleAnimation(panel);
 }
@@ -972,7 +995,20 @@ function end(e){
 
         if(!dragged){
 
-            menu();
+            const now = Date.now();
+
+            if(now - last_tap_time < DOUBLE_TAP_DELAY){
+
+                // Consume the pair so a third quick tap starts a fresh
+                // single-tap/double-tap sequence instead of re-triggering.
+                last_tap_time = 0;
+                toggle_double_tap_zoom();
+            }
+            else{
+
+                last_tap_time = now;
+                menu();
+            }
         }
         else{
 
@@ -1016,6 +1052,21 @@ function move(e){
             e = touches;
         }
 
+        // Only count this as a drag once the finger/cursor has actually
+        // travelled past a small threshold from where it went down — see
+        // the DRAG_THRESHOLD_SQ comment above.
+
+        if(!dragged){
+
+            const ddx = e.pageX - down_x;
+            const ddy = e.pageY - down_y;
+
+            if((ddx * ddx + ddy * ddy) > DRAG_THRESHOLD_SQ){
+
+                dragged = true;
+            }
+        }
+
         // handle x-axis in slide mode and in drag mode
 
         let diff = (media_w * scale - viewport_w) / 2;
@@ -1049,8 +1100,6 @@ function move(e){
                 }
             }
         }
-
-        dragged = true;
 
         update_panel(x, y);
     }
@@ -1216,6 +1265,34 @@ export function zoom(factor){
     scale = factor || 1;
 
     update_scroll();
+}
+
+/**
+ * Double-tap/double-click: zoom in to a preset level from 1x, or reset
+ * straight back to 1x if already zoomed in.
+ */
+
+function toggle_double_tap_zoom(){
+
+    //console.log("toggle_double_tap_zoom");
+
+    if(scale > 1){
+
+        disable_autoresizer();
+
+        x = 0;
+        y = 0;
+
+        update_panel(x, y);
+        zoom(1);
+    }
+    else{
+
+        for(let i = 0; i < DOUBLE_TAP_ZOOM_STEPS; i++){
+
+            zoom_in();
+        }
+    }
 }
 
 export function info(){
