@@ -65,6 +65,15 @@ const DOUBLE_TAP_DELAY = 300;
 // zoom_in() cap of 50x).
 const DOUBLE_TAP_ZOOM_STEPS = 3;
 
+// Two-finger pinch-to-zoom. Bounds mirror the zoom_in()/zoom_out() limits
+// (1x = fit, 50x = library hard cap).
+const PINCH_MIN_SCALE = 1;
+const PINCH_MAX_SCALE = 50;
+
+let pinching = 0;
+let pinch_start_dist = 0;
+let pinch_start_scale = 1;
+
 let is_down;
 let dragged;
 let slidable;
@@ -960,11 +969,43 @@ export function menu(state){
     }
 }
 
+/**
+ * Distance in px between the first two active touch points.
+ * @param {TouchList} touches
+ * @returns {number}
+ */
+
+function touch_distance(touches){
+
+    const dx = touches[0].pageX - touches[1].pageX;
+    const dy = touches[0].pageY - touches[1].pageY;
+
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
 function start(e){
 
     //console.log("start");
 
     cancelEvent(e, true);
+
+    // Two fingers down => start a pinch-zoom gesture instead of a drag/tap.
+    if(e.touches && (e.touches.length > 1)){
+
+        disable_autoresizer();
+
+        pinching = 1;
+        is_down = false;
+        dragged = true;
+        pinch_start_dist = touch_distance(e.touches) || 1;
+        pinch_start_scale = scale;
+
+        // pan/zoom must track the fingers 1:1 — kill the CSS transitions
+        toggleAnimation(panel);
+        toggleAnimation(media);
+
+        return;
+    }
 
     is_down = true;
     dragged = false;
@@ -990,6 +1031,28 @@ function end(e){
     //console.log("end");
 
     cancelEvent(e);
+
+    // Wind down a pinch gesture once fewer than two fingers remain.
+    if(pinching){
+
+        if(!e.touches || (e.touches.length < 2)){
+
+            pinching = 0;
+
+            if(scale <= 1){
+
+                x = 0;
+                y = 0;
+
+                update_panel();
+            }
+
+            toggleAnimation(panel, true);
+            toggleAnimation(media, true);
+        }
+
+        return;
+    }
 
     if(is_down){
 
@@ -1042,6 +1105,38 @@ function move(e){
     //console.log("move");
 
     cancelEvent(e);
+
+    // Pinch-zoom: scale relative to the finger spread at gesture start,
+    // clamped, with the pan kept inside the (new) image bounds.
+    if(pinching){
+
+        const touches = e.touches;
+
+        if(touches && (touches.length > 1)){
+
+            let value = pinch_start_scale * (touch_distance(touches) / pinch_start_dist);
+
+            if(value < PINCH_MIN_SCALE){
+
+                value = PINCH_MIN_SCALE;
+            }
+            else if(value > PINCH_MAX_SCALE){
+
+                value = PINCH_MAX_SCALE;
+            }
+
+            const diff_x = (media_w * value - viewport_w) / 2;
+            const diff_y = (media_h * value - viewport_h) / 2;
+
+            x = diff_x <= 0 ? 0 : (x > diff_x ? diff_x : (x < -diff_x ? -diff_x : x));
+            y = diff_y <= 0 ? 0 : (y > diff_y ? diff_y : (y < -diff_y ? -diff_y : y));
+
+            zoom(value);
+            update_panel(x, y);
+        }
+
+        return;
+    }
 
     if(is_down){
 
@@ -1373,6 +1468,7 @@ export function close(hashchange){
     gallery_next && (media_next.src = "");
     playing && play();
     media && checkout(media);
+    pinching = 0;
     hide && (hide = clearTimeout(hide));
     toggle_theme && theme();
     options_class && removeClass(widget, options_class);
